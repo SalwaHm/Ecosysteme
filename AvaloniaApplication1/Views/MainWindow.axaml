@@ -1,0 +1,25 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="using:AvaloniaApplication1.ViewModels"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        x:Class="AvaloniaApplication1.Views.MainWindow"
+        x:DataType="vm:MainWindowViewModel"
+        Icon="/Assets/avalonia-logo.ico"
+        Title="AvaloniaApplication1">
+
+    <Grid>
+        <!--Plateau de jeu (image de fond)-->
+        <Image Source="/Assets/plateau.jpg" Stretch="UniformToFill" />
+
+        <!--Bloc pour ajouter les personnages par dessus le plateau-->
+        <Canvas Name="GameCanvas">
+            <Image Name="Chevre" Source="/Assets/chevre_.png" Width="100" Height="100" Canvas.Left="200" Canvas.Top="150" />
+            <Image Name="Loup" Source="/Assets/loup_.png" Width="120" Height="120" Canvas.Left="400" Canvas.Top="300" />
+            <Image Source="/Assets/plante.png" Width="120" Height="120" Canvas.Left="350" Canvas.Top="150" />
+        </Canvas>
+    </Grid>
+</Window>
+
+
