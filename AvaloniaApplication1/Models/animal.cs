@@ -11,6 +11,8 @@ namespace AvaloniaApplication1.Models //car la classe Animal fait partie du sous
         public double Width { get; set; } //stockage de la largeur de l'animal
         public double Height { get; set; } //stockage de la hauteur de l'animal
 
+        private int _currentDirection; //direction courante de l'animal (0, 1, 2, ou 3)
+
         //constructeur de la classe (méthode appelée automatiquement lors de création d'un objet Animal):
         public Animal(string name, double x, double y, double width, double height) //Exemple d'utilisation: Animal chevre = new Animal("Chevre", 100, 200, 50, 50);
         {
@@ -19,6 +21,7 @@ namespace AvaloniaApplication1.Models //car la classe Animal fait partie du sous
             Y = y;
             Width = width;
             Height = height;
+            SetRandomDirection(); //initialise une direction aléatoire pour l'animal
         }
 
         //Méthodes pour déplacer l'animal dans une certaine direction:
@@ -42,28 +45,34 @@ namespace AvaloniaApplication1.Models //car la classe Animal fait partie du sous
             Y = Math.Max(0, Y - step);
         }
 
-        // Méthode pour choisir un déplacement aléatoire
-        public void ChooseRandomlyMove(double step, double canvasWidth, double canvasHeight)
+        //Définition d'une direction aléatoire pour l'animal
+        public void SetRandomDirection()
         {
             Random random = new Random();
-            int direction = random.Next(4); // Génère un nombre entre 0 et 3
+            _currentDirection = random.Next(4); //génère un nombre entre 0 et 3
+        }
 
-            switch (direction)
+        //déplace l'animal dans la direction actuelle
+        public void MoveInCurrentDirection(double step, double canvasWidth, double canvasHeight)
+        {
+            switch (_currentDirection)
             {
-                case 0:
+                case 0: 
                     MoveRight(step, canvasWidth);
                     break;
-                case 1:
+
+                case 1: 
                     MoveLeft(step, canvasWidth);
                     break;
-                case 2:
+
+                case 2: 
                     MoveForward(step, canvasHeight);
                     break;
-                case 3:
+
+                case 3: 
                     MoveBackward(step, canvasHeight);
                     break;
             }
         }
     }
 }
-
