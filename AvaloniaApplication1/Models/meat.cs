@@ -1,27 +1,35 @@
 using Avalonia.Controls;
 using Avalonia.Media.Imaging;
-using System;
 
 namespace AvaloniaApplication1.Models
 {
-    public class Meat
+    public class Dead
     {
-        public string meat_image; 
+        public double X { get; set; }
+        public double Y { get; set; }
+        public string ImageSource { get; set; }
 
-        // Constructeur
-        public Meat(string meat_image)
+        public Dead(double x, double y, string imageSource)
         {
-            meat_image = "Assets/meat.png";
+            X = x;
+            Y = y;
+            ImageSource = imageSource;
         }
 
-        //méthode pour transformer un animal en viande
-        public void TransformToMeat(Image animalImage)
+        // Méthode pour afficher l'image "meat.png" à la position donnée
+        public void DisplayMeat(Canvas gameCanvas)
         {
-            if (animalImage != null)
+            var meatImage = new Image
             {
-                // Remplace l'image actuelle par l'image de viande
-                animalImage.Source = new Bitmap(meat_image);
-            }
+                Source = new Bitmap(ImageSource),
+                Width = 100,  // Ajuster selon la taille de l'animal
+                Height = 100  // Ajuster selon la taille de l'animal
+            };
+
+            // Ajouter l'image à la position donnée sur le Canvas
+            gameCanvas.Children.Add(meatImage);
+            Canvas.SetLeft(meatImage, X);
+            Canvas.SetTop(meatImage, Y);
         }
     }
 }

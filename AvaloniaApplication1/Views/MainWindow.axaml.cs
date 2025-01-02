@@ -1,7 +1,10 @@
 using System; //Nécessaire pour EventArgs et TimeSpan
+using System.IO; //Nécessaire pour vérifier si le fichier existe
 using Avalonia.Controls; //Pour les contrôles de l'interface
+using Avalonia.Media.Imaging; //Pour gérer les images
 using Avalonia.Threading; //Nécessaire pour DispatcherTimer
 using AvaloniaApplication1.Models; //Référence à la classe Animal
+using System.Collections.Generic; //Nécessaire pour utiliser Dictionary
 
 namespace AvaloniaApplication1.Views //on définit ici le namespace auquel appartient la classe MainWindow --> cette classe fait donc partie de la section Views du projet AvaloniaApplication1
 {
@@ -14,14 +17,24 @@ namespace AvaloniaApplication1.Views //on définit ici le namespace auquel appar
         private int _currentStepChevre; //suivi du pas actuel pour la chèvre
         private int _currentStepLoup;   //suivi du pas actuel pour le loup
 
+        // Dictionnaire pour gérer les images associées aux animaux
+        private readonly Dictionary<Animal, Image> _animalImages;
+
         //Constructeur de la classe (appelé lors de la création de la fenêtre)
         public MainWindow()
         {
             InitializeComponent(); //initialise les composants qui sont définis dans le fichier XAML (images, canvas, ...)
 
-            //Initialisation de la chèvre avec sa position de départ (cf position décrite dans canvas)
+            //Initialisation des animaux
             _chevre = new Animal("Chevre", 200, 150, 100, 100);
             _loup = new Animal("Loup", 400, 300, 120, 120);
+
+            // Initialisation du dictionnaire pour associer les images
+            _animalImages = new Dictionary<Animal, Image>();
+
+            // Ajout des animaux avec leurs images respectives
+            AddAnimalToCanvas(_chevre, "Assets/chevre_.png");
+            AddAnimalToCanvas(_loup, "Assets/loup_.png");
 
             //Initialisation des compteurs
             _currentStepChevre = 0;
@@ -36,25 +49,52 @@ namespace AvaloniaApplication1.Views //on définit ici le namespace auquel appar
             _timer.Start(); // Démarre le timer
         }
 
+        // Méthode pour ajouter un animal au canvas avec son image
+        private void AddAnimalToCanvas(Animal animal, string imagePath)
+        {
+            // Vérifiez si le fichier existe
+            if (!File.Exists(imagePath))
+            {
+                throw new FileNotFoundException($"Le fichier image est introuvable : {imagePath}");
+            }
+
+            // Création et configuration de l'image
+            var animalImage = new Image
+            {
+                Width = animal.Width,
+                Height = animal.Height,
+                Source = new Bitmap(imagePath)
+            };
+
+            // Positionnement sur le canvas
+            Canvas.SetLeft(animalImage, animal.X); //position X initiale
+            Canvas.SetTop(animalImage, animal.Y); //position Y initiale
+
+            // Ajout de l'image au canvas
+            GameCanvas.Children.Add(animalImage);
+
+            // Stockage dans le dictionnaire pour utilisation ultérieure
+            _animalImages[animal] = animalImage;
+        }
+
         // Méthode appelée à chaque tick du timer
         private void OnTimerTick(object sender, EventArgs e)
         {
-            //chaque animal va effectué trois pas (à chaque seconde) dans chacune des directions choisies
+            //chaque animal va effectuer trois pas (à chaque seconde) dans chacune des directions choisies
             if (_currentStepChevre < 3)
             {
-                MoveAnimal(_chevre, "Chevre", _currentStepChevre);
+                MoveAnimal(_chevre, _currentStepChevre);
                 _currentStepChevre++; //on incrémente le compteur de pas
             }
             else
             {
                 _chevre.SetRandomDirection(); //nouvelle direction après les trois pas
-                _currentStepChevre = 0;// on réinitialise le compteur de pas à 0
+                _currentStepChevre = 0; // on réinitialise le compteur de pas à 0
             }
 
-            
             if (_currentStepLoup < 3)
             {
-                MoveAnimal(_loup, "Loup", _currentStepLoup);
+                MoveAnimal(_loup, _currentStepLoup);
                 _currentStepLoup++;
             }
             else
@@ -65,7 +105,7 @@ namespace AvaloniaApplication1.Views //on définit ici le namespace auquel appar
         }
 
         //Méthode pour déplacer un animal 
-        private void MoveAnimal(Animal animal, string animalName, int stepIndex)
+        private void MoveAnimal(Animal animal, int stepIndex)
         {
             double canvasWidth = GameCanvas.Bounds.Width; //récupération de la largeur du canvas
             double canvasHeight = GameCanvas.Bounds.Height; //récupération de la hauteur du canvas
@@ -75,8 +115,7 @@ namespace AvaloniaApplication1.Views //on définit ici le namespace auquel appar
             animal.MoveInCurrentDirection(step, canvasWidth, canvasHeight);
 
             //Met à jour la position de l'image associée sur le canvas
-            var animalImage = this.FindControl<Image>(animalName);
-            if (animalImage != null)
+            if (_animalImages.TryGetValue(animal, out var animalImage))
             {
                 Canvas.SetLeft(animalImage, animal.X); //Met à jour la position X
                 Canvas.SetTop(animalImage, animal.Y);  //Met à jour la position Y
@@ -84,4 +123,5 @@ namespace AvaloniaApplication1.Views //on définit ici le namespace auquel appar
         }
     }
 }
+
 

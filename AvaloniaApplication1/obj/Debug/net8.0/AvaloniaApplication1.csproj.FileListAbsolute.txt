@@ -135,3 +135,11 @@ C:\Users\salwa\OneDrive - ECAM\ECAM\Bloc 3\Software Engineering 1\Ecosysteme\Eco
 C:\Users\salwa\OneDrive - ECAM\ECAM\Bloc 3\Software Engineering 1\Ecosysteme\Ecosysteme-1\AvaloniaApplication1\obj\Debug\net8.0\AvaloniaApplication1.genruntimeconfig.cache
 C:\Users\salwa\OneDrive - ECAM\ECAM\Bloc 3\Software Engineering 1\Ecosysteme\Ecosysteme-1\AvaloniaApplication1\obj\Debug\net8.0\ref\AvaloniaApplication1.dll
 C:\Users\salwa\OneDrive - ECAM\ECAM\Bloc 3\Software Engineering 1\Ecosysteme\Ecosysteme-1\AvaloniaApplication1\obj\Debug\net8.0\AvaloniaApplication1.sourcelink.json
+C:\Users\salwa\OneDrive - ECAM\ECAM\Bloc 3\Software Engineering 1\Ecosysteme\Ecosysteme-1\AvaloniaApplication1\bin\Debug\net8.0\Assets\avalonia-logo.ico
+C:\Users\salwa\OneDrive - ECAM\ECAM\Bloc 3\Software Engineering 1\Ecosysteme\Ecosysteme-1\AvaloniaApplication1\bin\Debug\net8.0\Assets\chevre.png
+C:\Users\salwa\OneDrive - ECAM\ECAM\Bloc 3\Software Engineering 1\Ecosysteme\Ecosysteme-1\AvaloniaApplication1\bin\Debug\net8.0\Assets\chevre_.png
+C:\Users\salwa\OneDrive - ECAM\ECAM\Bloc 3\Software Engineering 1\Ecosysteme\Ecosysteme-1\AvaloniaApplication1\bin\Debug\net8.0\Assets\loup.png
+C:\Users\salwa\OneDrive - ECAM\ECAM\Bloc 3\Software Engineering 1\Ecosysteme\Ecosysteme-1\AvaloniaApplication1\bin\Debug\net8.0\Assets\loup_.png
+C:\Users\salwa\OneDrive - ECAM\ECAM\Bloc 3\Software Engineering 1\Ecosysteme\Ecosysteme-1\AvaloniaApplication1\bin\Debug\net8.0\Assets\meat.png
+C:\Users\salwa\OneDrive - ECAM\ECAM\Bloc 3\Software Engineering 1\Ecosysteme\Ecosysteme-1\AvaloniaApplication1\bin\Debug\net8.0\Assets\plante.png
+C:\Users\salwa\OneDrive - ECAM\ECAM\Bloc 3\Software Engineering 1\Ecosysteme\Ecosysteme-1\AvaloniaApplication1\bin\Debug\net8.0\Assets\plateau.jpg

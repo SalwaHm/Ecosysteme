@@ -15,10 +15,7 @@
 
         <!--Bloc pour ajouter les personnages par dessus le plateau-->
         <Canvas Name="GameCanvas">
-            <Image Name="Chevre" Source="/Assets/chevre_.png" Width="100" Height="100" Canvas.Left="200" Canvas.Top="150" />
-            <Image Name="Loup" Source="/Assets/loup_.png" Width="120" Height="120" Canvas.Left="400" Canvas.Top="300" />
-            <Image Source="/Assets/plante.png" Width="120" Height="120" Canvas.Left="350" Canvas.Top="150" />
-            <!--<Image Name="Meat" Source="/Assets/meat.png" Width="80" Height="80"/>-->
+            
         </Canvas>
     </Grid>
 </Window>
