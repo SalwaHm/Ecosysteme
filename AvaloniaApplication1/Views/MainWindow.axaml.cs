@@ -4,6 +4,7 @@ using Avalonia.Controls; //Pour les contrôles de l'interface
 using Avalonia.Media.Imaging; //Pour gérer les images
 using Avalonia.Threading; //Nécessaire pour DispatcherTimer
 using AvaloniaApplication1.Models; //Référence à la classe Animal
+using AvaloniaApplication1.Utilities; //Référence à la classe Remove
 using System.Collections.Generic; //Nécessaire pour utiliser Dictionary
 
 namespace AvaloniaApplication1.Views //on définit ici le namespace auquel appartient la classe MainWindow --> cette classe fait donc partie de la section Views du projet AvaloniaApplication1
@@ -12,22 +13,29 @@ namespace AvaloniaApplication1.Views //on définit ici le namespace auquel appar
     {
         private Animal _chevre; //stockage d'une instance de la classe Animal (ici qui représente la chèvre)
         private Animal _loup; //stockage d'une instance de la classe Animal (ici qui représente le loup)
+        private Animal _chevre2;
+        private Animal _loup2;
         private DispatcherTimer _timer; //stockage d'une instance de DispatcherTimer utilisé pour exécuter une tâche périodiquement
 
         private int _currentStepChevre; //suivi du pas actuel pour la chèvre
         private int _currentStepLoup;   //suivi du pas actuel pour le loup
 
-        // Dictionnaire pour gérer les images associées aux animaux
+        //Dictionnaire pour gérer les images associées aux animaux
         private readonly Dictionary<Animal, Image> _animalImages;
+
+        //Gestionnaire de suppression des PNG
+        private readonly Remove _removeUtility;
 
         //Constructeur de la classe (appelé lors de la création de la fenêtre)
         public MainWindow()
         {
             InitializeComponent(); //initialise les composants qui sont définis dans le fichier XAML (images, canvas, ...)
 
-            //Initialisation des animaux
-            _chevre = new Animal("Chevre", 200, 150, 100, 100, 3, 500, "Herbivore");
-            _loup = new Animal("Loup", 400, 300, 120, 120, 3, 500, "Carnivore");
+            //Initialisation des animaux (animaux présents au début du jeu)
+            _chevre = new Animal("Chevre", 400, 150, 100, 100, 1, 100, "Herbivore");
+            _loup = new Animal("Loup", 300, 150, 120, 120, 3, 500, "Carnivore");
+            _loup2 = new Animal("Loup", 400, 300, 120, 120, 3, 1000, "Carnivore");
+            _chevre2 = new Animal("Chevre", 400, 150, 100, 100, 1, 100, "Herbivore");
 
             // Initialisation du dictionnaire pour associer les images
             _animalImages = new Dictionary<Animal, Image>();
@@ -35,8 +43,13 @@ namespace AvaloniaApplication1.Views //on définit ici le namespace auquel appar
             // Ajout des animaux avec leurs images respectives
             AddAnimalToCanvas(_chevre, "Assets/chevre_.png");
             AddAnimalToCanvas(_loup, "Assets/loup_.png");
+            AddAnimalToCanvas(_loup2, "Assets/loup_.png");
+            AddAnimalToCanvas(_chevre2, "Assets/chevre_.png");
 
-            //Initialisation des compteurs
+            // Initialisation du gestionnaire de suppression
+            _removeUtility = new Remove(GameCanvas, _animalImages);
+
+            //Initialisation des compteurs --> A SUPPRIMER (utilisé pour test)
             _currentStepChevre = 0;
             _currentStepLoup = 0;
 
@@ -52,12 +65,7 @@ namespace AvaloniaApplication1.Views //on définit ici le namespace auquel appar
         // Méthode pour ajouter un animal au canvas avec son image
         private void AddAnimalToCanvas(Animal animal, string imagePath)
         {
-            // Vérifiez si le fichier existe
-            if (!File.Exists(imagePath))
-            {
-                throw new FileNotFoundException($"Le fichier image est introuvable : {imagePath}");
-            }
-
+            
             // Création et configuration de l'image
             var animalImage = new Image
             {
@@ -73,7 +81,7 @@ namespace AvaloniaApplication1.Views //on définit ici le namespace auquel appar
             // Ajout de l'image au canvas
             GameCanvas.Children.Add(animalImage);
 
-            // Stockage dans le dictionnaire pour utilisation ultérieure
+            // Stockage dans le dictionnaire pour utilisation ultérieure --> nottamment pour suppresion des png quand ils meurent
             _animalImages[animal] = animalImage;
         }
 
@@ -84,6 +92,7 @@ namespace AvaloniaApplication1.Views //on définit ici le namespace auquel appar
             if (_currentStepChevre < 3)
             {
                 MoveAnimal(_chevre, _currentStepChevre);
+                MoveAnimal(_chevre2, _currentStepChevre);
                 _currentStepChevre++; //on incrémente le compteur de pas
             }
             else
@@ -95,6 +104,7 @@ namespace AvaloniaApplication1.Views //on définit ici le namespace auquel appar
             if (_currentStepLoup < 3)
             {
                 MoveAnimal(_loup, _currentStepLoup);
+                MoveAnimal(_loup2, _currentStepLoup);
                 _currentStepLoup++;
             }
             else
@@ -104,49 +114,23 @@ namespace AvaloniaApplication1.Views //on définit ici le namespace auquel appar
             }
         }
 
-        // Méthode pour remplacer un animal mort par une image de viande
-        private void ReplaceAnimalWithMeat(Animal animal)
-        {
-            if (_animalImages.TryGetValue(animal, out var animalImage))
-            {
-                // Supprime l'image de l'animal mort
-                GameCanvas.Children.Remove(animalImage);
-                _animalImages.Remove(animal);
-
-                // Ajoute une image de viande à la position finale
-                var meatImage = new Image
-                {
-                    Width = animal.Width,
-                    Height = animal.Height,
-                    Source = new Bitmap("Assets/meat.png")
-                };
-                Canvas.SetLeft(meatImage, animal.X);
-                Canvas.SetTop(meatImage, animal.Y);
-                GameCanvas.Children.Add(meatImage);
-            }
-        }
-
         //Méthode pour déplacer un animal (modifiée pour ne pas déplacer les animaux morts)
         private void MoveAnimal(Animal animal, int stepIndex)
         {
-            if (animal.IsDead)
-            {
-                return; // Si l'animal est mort, ne pas le déplacer
-            }
-
+            
             double canvasWidth = GameCanvas.Bounds.Width; //récupération de la largeur du canvas
             double canvasHeight = GameCanvas.Bounds.Height; //récupération de la hauteur du canvas
             double step = (stepIndex + 1) * 10; //taille du pas pour le déplacement en cours
 
             //déplace l'animal dans la direction courante
-            animal.MoveInCurrentDirection(step, canvasWidth, canvasHeight);
+            animal.MoveInCurrentDirection(step, canvasWidth, canvasHeight);//définit dans classe Animal (qui elle-meme fait appel à class Movement)
 
-            // Utilisation de l'énergie après le mouvement
-            animal.UseEnergy();
+            //Pour faire perdre de l'energie au cours du temps (UseEnergy définit dans class Animal et fait appel à class Energy)
+            animal.UseEnergy(); 
 
-            if (animal.IsDead)
+            if (animal.IsDead)//IsDead = statut de l'animal (wi vivant ou mort) définit dans class Animal (donc si valeur de IsDead est True --> remove l'animal)
             {
-                ReplaceAnimalWithMeat(animal);
+                _removeUtility.ReplaceAnimalWithMeat(animal); //utilisation de la classe remove pour faire disparaitre l'animal s'il est mort
                 return;
             }
 
@@ -159,6 +143,7 @@ namespace AvaloniaApplication1.Views //on définit ici le namespace auquel appar
         }
     }
 }
+
 
 
 

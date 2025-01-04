@@ -14,7 +14,7 @@ namespace AvaloniaApplication1.Models
 
         public void MoveRight(double step, double canvasWidth)
         {
-            _animal.X = Math.Min(canvasWidth - _animal.Width, _animal.X + step);
+            _animal.X = Math.Min(canvasWidth - _animal.Width, _animal.X + step); //pour s'assurer de ne pas sortir du plateau
         }
 
         public void MoveLeft(double step, double canvasWidth)

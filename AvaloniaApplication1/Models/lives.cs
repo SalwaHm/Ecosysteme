@@ -16,10 +16,10 @@ namespace AvaloniaApplication1.Models
                 _animal.Lives -= 1; //Perte d'une vie
                 _animal.Energy += 100; //Gain d'énergie (+100 points)
             }
-            if (_animal.Lives == 0)
+            if (_animal.Lives == 0)//si l'animal a perdu toutes ses vies
             {
-                // Déclare l'animal comme mort
-                _animal.Die();
+                //on déclare l'animal comme mort
+                _animal.Die();//appel méthode Die définit dans classe Animal
             }
         }
     }

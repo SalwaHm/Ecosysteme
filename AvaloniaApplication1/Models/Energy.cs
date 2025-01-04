@@ -22,8 +22,8 @@ namespace AvaloniaApplication1.Models
             }
             else
             {
-                // Appel à la classe Lives pour convertir une vie en énergie
-                _animal.ConvertingLivesIntoEnergy();
+                //Appel à la classe Lives pour convertir une vie en énergie
+                _animal.ConvertingLivesIntoEnergy();// définit dans class Animal et est une méthode qui fait appel à la classe Lives pour convertir uen vie en points d'énergie
             }
         }
     }
