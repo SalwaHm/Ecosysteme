@@ -26,8 +26,8 @@ namespace AvaloniaApplication1.Views //on définit ici le namespace auquel appar
             InitializeComponent(); //initialise les composants qui sont définis dans le fichier XAML (images, canvas, ...)
 
             //Initialisation des animaux
-            _chevre = new Animal("Chevre", 200, 150, 100, 100);
-            _loup = new Animal("Loup", 400, 300, 120, 120);
+            _chevre = new Animal("Chevre", 200, 150, 100, 100, 3, 500, "Herbivore");
+            _loup = new Animal("Loup", 400, 300, 120, 120, 3, 500, "Carnivore");
 
             // Initialisation du dictionnaire pour associer les images
             _animalImages = new Dictionary<Animal, Image>();
@@ -104,15 +104,51 @@ namespace AvaloniaApplication1.Views //on définit ici le namespace auquel appar
             }
         }
 
-        //Méthode pour déplacer un animal 
+        // Méthode pour remplacer un animal mort par une image de viande
+        private void ReplaceAnimalWithMeat(Animal animal)
+        {
+            if (_animalImages.TryGetValue(animal, out var animalImage))
+            {
+                // Supprime l'image de l'animal mort
+                GameCanvas.Children.Remove(animalImage);
+                _animalImages.Remove(animal);
+
+                // Ajoute une image de viande à la position finale
+                var meatImage = new Image
+                {
+                    Width = animal.Width,
+                    Height = animal.Height,
+                    Source = new Bitmap("Assets/meat.png")
+                };
+                Canvas.SetLeft(meatImage, animal.X);
+                Canvas.SetTop(meatImage, animal.Y);
+                GameCanvas.Children.Add(meatImage);
+            }
+        }
+
+        //Méthode pour déplacer un animal (modifiée pour ne pas déplacer les animaux morts)
         private void MoveAnimal(Animal animal, int stepIndex)
         {
+            if (animal.IsDead)
+            {
+                return; // Si l'animal est mort, ne pas le déplacer
+            }
+
             double canvasWidth = GameCanvas.Bounds.Width; //récupération de la largeur du canvas
             double canvasHeight = GameCanvas.Bounds.Height; //récupération de la hauteur du canvas
             double step = (stepIndex + 1) * 10; //taille du pas pour le déplacement en cours
 
             //déplace l'animal dans la direction courante
             animal.MoveInCurrentDirection(step, canvasWidth, canvasHeight);
+
+            // Utilisation de l'énergie après le mouvement
+            animal.UseEnergy();
+
+            if (animal.IsDead)
+            {
+                ReplaceAnimalWithMeat(animal);
+                return;
+            }
 
             //Met à jour la position de l'image associée sur le canvas
             if (_animalImages.TryGetValue(animal, out var animalImage))
@@ -123,5 +159,6 @@ namespace AvaloniaApplication1.Views //on définit ici le namespace auquel appar
         }
     }
 }
+
 
 

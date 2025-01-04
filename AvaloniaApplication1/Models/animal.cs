@@ -1,40 +1,65 @@
 using System;
 
-namespace AvaloniaApplication1.Models //Animal appartient au dossier Models
+namespace AvaloniaApplication1.Models
 {
-    //propriétés de l'animal (récupération de son nom, coordonnées, taille, largeur et variable Movement)
-    public class Animal //classe Animal
+    public class Animal
     {
         public string Name { get; set; } //get permet de lire la valeur et set permet de modifier la valeur
         public double X { get; set; }
         public double Y { get; set; }
         public double Width { get; set; }
         public double Height { get; set; }
+        public double Lives { get; set; }
+        public double Energy { get; set; }
+        public string Species { get; set; }
+        public bool IsDead { get; private set; } //Statut de vie/mort
 
-        private Movement _movement; //utilisé uniquement dans la classe Animal et est une instance privé de la classe Movement
+        private Movement _movement; //utilisé uniquement dans la classe Animal et est une instance privée de la classe Movement
+        private Energy _energy;
+        private Lives _lives;
 
-        public Animal(string name, double x, double y, double width, double height) //constructeur (initialise les propiétés Name, x et y, Width, Height)
+        public Animal(string name, double x, double y, double width, double height, double lives, double energy, string species)
         {
             Name = name;
             X = x;
             Y = y;
             Width = width;
             Height = height;
+            Lives = lives;
+            Energy = energy;
+            Species = species;
 
-            //initialisation de la classe Movement
-            _movement = new Movement(this); //this permet à la classe Movement d'accéder et de modifier les propriétés X et Y, ... de l'objet crée
-            _movement.SetRandomDirection(); //appelle à la méthode de déplacement aléatoire (contenu dans MOVEMENT) pour initialiser une direction aléatoire
+            // Initialisation des autres classes
+            _movement = new Movement(this);
+            _movement.SetRandomDirection();
+            _energy = new Energy(this);
+            _lives = new Lives(this);
         }
 
-        //Appel aux méthodes definies dans movement pour le déplacement de l'animal
         public void MoveInCurrentDirection(double step, double canvasWidth, double canvasHeight)
         {
             _movement.MoveInCurrentDirection(step, canvasWidth, canvasHeight);
         }
 
-        public void SetRandomDirection() //pour générer un nouveau deplacement aléatoire (l'appel à cette méthode publique est fait dans le code Main)-> cette méthode elle-meme fait appel à setrandomdirection contenu dans Moveemnt
+        public void SetRandomDirection()
         {
             _movement.SetRandomDirection();
         }
+
+        public void UseEnergy()
+        {
+            _energy.LessEnergy();
+        }
+
+        public void ConvertingLivesIntoEnergy()
+        {
+            _lives.ConvertingLifeIntoEnergy();
+        }
+
+        public void Die()
+        {
+            IsDead = true;
+        }
     }
 }
+

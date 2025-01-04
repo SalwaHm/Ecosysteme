@@ -4,7 +4,7 @@ namespace AvaloniaApplication1.Models
 {
     public class Movement
     {
-        private readonly Animal _animal;
+        private readonly Animal _animal;//readonly => pour garantir que valeur non modifié après création objet Movement
         private int _currentDirection;
 
         public Movement(Animal animal)
