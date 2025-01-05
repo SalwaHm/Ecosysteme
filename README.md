@@ -7,7 +7,9 @@ Ce projet est une simulation d'un écosystème dans lequel des animaux se promè
 Une fois le programme lancé, des animaux et plantes définies au préalable se dépacent sur le plateau de jeu. Les animaux sont soit carnivores ou herbivores et voient leur énergie diminuer au cours du temps. Lorsqu'un animal n'a plus d'énergie, il peut convertir l'une de ses vies en points d'énergies et lorqu'il n'a ni énergie, ni vies, ils meurent. Pour se faire, l'animal en question disparaît pour laisser place à une image de viande. Lorsqu'un carnivore rencontre de la viande (soit un animal mort), il s'en nourrit et voit ainsi ses réserves d'énergie augmenter et la viande disparaît. Lorsq'un herbivore croise une plante sur son chemin, elle se nourrit de cette dernière. Ainsi, la plante disparaît et l'herbivore voir ses points d'énergie augmenter. Lorsque deux animaux se croisent, ils se voient tout les deux perdent des points d'énergie pour représenter le fait qu'ils se soient attaqués. 
 
 ## Principes SOLID
-
+Pour mener à bien ce projet, ce dernier s'est nottamment reposé sur les principes SOLID suivants:
+1) Single Responsibility Principle:
+   Ce principe SOLID s'avère très efficace pour éviter la redondance de code en attribuant qu'une seule tâche aux classe et aux méthodes. Cle permet également d'avoir des classes moins longues en les segmentant suivant ce principe. Un exemple de classe, qui suit cette règle dans ce projet, est Lives (contenue dans le fichier lives.cs). En effet, on observe que cette classe n'a pour rôle que convertir
 ## Diagramme de classe du projet
 
 ![Diagrammes-4](https://github.com/user-attachments/assets/a5bf0457-a25e-428a-bd1c-1f508d911a5c)
