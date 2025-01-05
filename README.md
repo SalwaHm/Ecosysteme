@@ -25,7 +25,10 @@ Pour mener à bien ce projet, ce dernier s'est nottamment reposé sur les princi
 ![Diagrammes-4](https://github.com/user-attachments/assets/a5bf0457-a25e-428a-bd1c-1f508d911a5c)
 
 ## Diagramme d'activités
+
 ![image](https://github.com/user-attachments/assets/5e14e1d1-8753-4ef8-bf02-8a0bd956b9c3)
 
 ## Diagramme de Séquences
+
+![image](https://github.com/user-attachments/assets/27a55467-9c82-4e3f-ad13-385d4d49e5a4)
 
