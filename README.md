@@ -9,3 +9,7 @@ Une fois le programme lancé, des animaux et plantes définies au préalable se 
 ## Diagramme de classe du projet
 
 ![Diagrammes-4](https://github.com/user-attachments/assets/a5bf0457-a25e-428a-bd1c-1f508d911a5c)
+
+## Diagramme d'activités
+![image](https://github.com/user-attachments/assets/5e14e1d1-8753-4ef8-bf02-8a0bd956b9c3)
+
