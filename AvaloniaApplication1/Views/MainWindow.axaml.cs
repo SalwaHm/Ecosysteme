@@ -32,10 +32,10 @@ namespace AvaloniaApplication1.Views //on définit ici le namespace auquel appar
             InitializeComponent(); //initialise les composants qui sont définis dans le fichier XAML (images, canvas, ...)
 
             //Initialisation des animaux (animaux présents au début du jeu)
-            _chevre = new Animal("Chevre", 400, 150, 100, 100, 1, 100, "Herbivore");
+            _chevre = new Animal("Chevre", 400, 150, 100, 100, 2, 200, "Herbivore");
             _loup = new Animal("Loup", 300, 150, 120, 120, 3, 500, "Carnivore");
             _loup2 = new Animal("Loup", 400, 300, 120, 120, 3, 1000, "Carnivore");
-            _chevre2 = new Animal("Chevre", 400, 150, 100, 100, 1, 100, "Herbivore");
+            _chevre2 = new Animal("Chevre", 400, 150, 100, 100, 3, 100, "Herbivore");
 
             // Initialisation du dictionnaire pour associer les images
             _animalImages = new Dictionary<Animal, Image>();
