@@ -9,11 +9,11 @@ Une fois le programme lancé, des animaux et plantes définies au préalable se 
 ## Principes SOLID
 Pour mener à bien ce projet, ce dernier s'est nottamment reposé sur les principes SOLID suivants:
 1) Single Responsibility Principle:
-   Ce principe SOLID s'avère très efficace pour éviter la redondance de code en attribuant qu'une seule tâche aux classe et aux méthodes. Cle permet également d'avoir des classes moins longues en les segmentant suivant ce principe. Un exemple de classe, qui suit cette règle dans ce projet, est Lives (contenue dans le fichier lives.cs). En effet, on observe que cette classe n'a pour rôle que de gérer les vies des animaux. Pour se faire, elle convertit la vie d'un animal en points d'énergie seulement s'il reste des vies à l'animal.
+   1) Ce principe SOLID s'avère très efficace pour éviter la redondance de code en attribuant qu'une seule tâche aux classe et aux méthodes. Cle permet également d'avoir des classes moins longues en les segmentant suivant ce principe. Un exemple de classe, qui suit cette règle dans ce projet, est Lives (contenue dans le fichier lives.cs). En effet, on observe que cette classe n'a pour rôle que de gérer les vies des animaux. Pour se faire, elle convertit la vie d'un animal en points d'énergie seulement s'il reste des vies à l'animal.
 
-   Un autre exemple pour illustrer ce principe serait celui de la classe Energy. On observe que cette classe n'a elle aussi qu'une seule fonction, celle de la gestion des points d'énergie des animaux. De plus, les deux méthodes que contient cette classe ont chacune qu'un seul rôle à remplir. En effet, la méthode "PlusEnergy" ajoute des points d'énergie à l'animal et la méthode "LessEnergy" lui en fait perdre dans le cas où l'animal possède toujours quelques point d'énergie à perdre (dans le cas contraire, un appel est fait à la méthode "ConvertingLivesIntoEnergy" de la classe "Lives" pour convertir des points de vies en énergie.
+   2) Un autre exemple pour illustrer ce principe serait celui de la classe Energy. On observe que cette classe n'a elle aussi qu'une seule fonction, celle de la gestion des points d'énergie des animaux. De plus, les deux méthodes que contient cette classe ont chacune qu'un seul rôle à remplir. En effet, la méthode "PlusEnergy" ajoute des points d'énergie à l'animal et la méthode "LessEnergy" lui en fait perdre dans le cas où l'animal possède toujours quelques point d'énergie à perdre (dans le cas contraire, un appel est fait à la méthode "ConvertingLivesIntoEnergy" de la classe "Lives" pour convertir des points de vies en énergie.
 
-   2) 
+2) 
 ## Diagramme de classe du projet
 
 ![Diagrammes-4](https://github.com/user-attachments/assets/a5bf0457-a25e-428a-bd1c-1f508d911a5c)
