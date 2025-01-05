@@ -16,6 +16,7 @@ Pour mener à bien ce projet, ce dernier s'est nottamment reposé sur les princi
 
 2) Open Principle
    Ce principe consiste à faire en sorte que le code soit ouvert aux extensions, autrement dit qu'on puisse y ajouter des fonctionnalités (ou faire en sorte que le code soit fermé au modifications dans le cas du Closed Principle).
+   Dans notre cas, la classe "Animal" (contenu dans animal.cs) illustre ce principe. En effet, au cours de la réalisation de ce projet, cette classe s'est vue ajouter une nouvelle méthode à chaque étape. Chacune de ces méthodes étant une nouvelle fonctionnalité de l'animal qui font, en réalité, unqiuement un appel à d'autres classes. Ces méthodes ont pu être ajoutées sans pour autant modifier le contenu initialement présent dans la classe "Animal". 
    
 ## Diagramme de classe du projet
 
